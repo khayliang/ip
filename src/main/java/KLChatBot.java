@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KLChatBot {
     public static void main(String[] args) {
@@ -8,6 +10,7 @@ public class KLChatBot {
         System.out.println(opening);
 
         BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
+        List<String> userCommands = new ArrayList<>();
 
         while (true) {
             try {
@@ -15,8 +18,16 @@ public class KLChatBot {
                 if (input.equals("bye")) {
                     break;
                 }
-                System.out.print("____________________________________________________________\n");
-                System.out.println(input);
+                if (input.equals("list")) {
+                    System.out.print("____________________________________________________________\n");
+                    for (int i = 0; i < userCommands.size(); i++) {
+                        System.out.println(" " + (i + 1) + ". " + userCommands.get(i));
+                    }
+                } else {
+                    userCommands.add(input);
+                    System.out.print("____________________________________________________________\n");
+                    System.out.println(" added: " + input);
+                }
                 System.out.print("____________________________________________________________\n");
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
