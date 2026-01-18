@@ -15,40 +15,126 @@ public class KLChatBot {
         while (true) {
             try {
                 String input = stdin.readLine();
-                if (input.equals("bye")) {
-                    break;
+                String command = input.trim();
+                String argument = "";
+                int firstSpace = input.indexOf(' ');
+                if (firstSpace != -1) {
+                    command = input.substring(0, firstSpace).trim();
+                    argument = input.substring(firstSpace + 1).trim();
                 }
-                if (input.equals("list")) {
-                    System.out.print("____________________________________________________________\n");
-                    System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                    }
-                    System.out.print("____________________________________________________________\n");
-                } else if (input.startsWith("mark ")) {
-                    int idx = Integer.parseInt(input.split(" ")[1].trim()) - 1;
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).markDone();
+                switch (command) {
+                    case "bye":
+                        break;
+                    case "list":
                         System.out.print("____________________________________________________________\n");
-                        System.out.println(" Nice! I've marked this task as done:");
-                        System.out.println("   " + tasks.get(idx));
+                        System.out.println(" Here are the tasks in your list:");
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println(" " + (i + 1) + "." + tasks.get(i));
+                        }
                         System.out.print("____________________________________________________________\n");
-                    }
-                } else if (input.startsWith("unmark ")) {
-                    int idx = Integer.parseInt(input.split(" ")[1].trim()) - 1;
-                    if (idx >= 0 && idx < tasks.size()) {
-                        tasks.get(idx).markUndone();
+                        continue;
+                    case "mark":
+                        try {
+                            int idx = Integer.parseInt(argument) - 1;
+                            if (idx < 0 || idx >= tasks.size()) {
+                                throw new IllegalArgumentException();
+                            }
+                            tasks.get(idx).markDone();
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Nice! I've marked this task as done:");
+                            System.out.println("   " + tasks.get(idx));
+                            System.out.print("____________________________________________________________\n");
+                        } catch (IllegalArgumentException e) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: Invalid task number.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
+                    case "unmark":
+                        try {
+                            int idx = Integer.parseInt(argument) - 1;
+                            if (idx < 0 || idx >= tasks.size()) {
+                                throw new IllegalArgumentException();
+                            }
+                            tasks.get(idx).markUndone();
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" OK, I've marked this task as not done yet:");
+                            System.out.println("   " + tasks.get(idx));
+                            System.out.print("____________________________________________________________\n");
+                        } catch (IllegalArgumentException e) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: Invalid task number.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
+                    case "todo":
+                        if (argument.isEmpty()) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: The description of a todo cannot be empty.");
+                            System.out.print("____________________________________________________________\n");
+                        } else {
+                            Task t = new Todo(argument);
+                            tasks.add(t);
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + t);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
+                    case "deadline":
+                        String[] parts = argument.split(" /by ", 2);
+                        String desc = parts[0].trim();
+                        String by = parts.length > 1 ? parts[1].trim() : "";
+                        if (desc.isEmpty() || by.isEmpty()) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: The description and deadline must not be empty.");
+                            System.out.print("____________________________________________________________\n");
+                        } else {
+                            Task t = new Deadline(desc, by);
+                            tasks.add(t);
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + t);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
+                    case "event":
+                        String[] eventParts = argument.split(" /from ", 2);
+                        String eventDesc = eventParts[0].trim();
+                        String from = "", to = "";
+                        if (eventParts.length > 1) {
+                            String[] fromTo = eventParts[1].split(" /to ", 2);
+                            from = fromTo[0].trim();
+                            if (fromTo.length > 1) {
+                                to = fromTo[1].trim();
+                            }
+                        }
+                        if (eventDesc.isEmpty() || from.isEmpty() || to.isEmpty()) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: The description, from, and to fields must not be empty.");
+                            System.out.print("____________________________________________________________\n");
+                        } else {
+                            Task t = new Event(eventDesc, from, to);
+                            tasks.add(t);
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + t);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
+                    default:
                         System.out.print("____________________________________________________________\n");
-                        System.out.println(" OK, I've marked this task as not done yet:");
-                        System.out.println("   " + tasks.get(idx));
+                        System.out.println(" Error: Invalid command.");
                         System.out.print("____________________________________________________________\n");
-                    }
-                } else {
-                    tasks.add(new Task(input));
-                    System.out.print("____________________________________________________________\n");
-                    System.out.println(" added: " + input);
-                    System.out.print("____________________________________________________________\n");
+                        continue;
                 }
+
+                // we can break here because all other commands use a continue
+                // so only time we exit switch statement is when command is "bye"
+                break;
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }
