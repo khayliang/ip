@@ -125,6 +125,24 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
+                    case "delete":
+                        try {
+                            int idx = Integer.parseInt(argument) - 1;
+                            if (idx < 0 || idx >= tasks.size()) {
+                                throw new IllegalArgumentException();
+                            }
+                            Task removed = tasks.remove(idx);
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Noted. I've removed this task:");
+                            System.out.println("   " + removed);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                            System.out.print("____________________________________________________________\n");
+                        } catch (IllegalArgumentException e) {
+                            System.out.print("____________________________________________________________\n");
+                            System.out.println(" Error: Invalid task number.");
+                            System.out.print("____________________________________________________________\n");
+                        }
+                        continue;
                     default:
                         System.out.print("____________________________________________________________\n");
                         System.out.println(" Error: Invalid command.");
