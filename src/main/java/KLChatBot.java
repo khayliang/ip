@@ -1,8 +1,36 @@
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class KLChatBot {
+    enum CommandType {
+        BYE("bye"),
+        LIST("list"),
+        MARK("mark"),
+        UNMARK("unmark"),
+        TODO("todo"),
+        DEADLINE("deadline"),
+        EVENT("event"),
+        DELETE("delete");
+
+        private final String command;
+        CommandType(String command) {
+            this.command = command;
+        }
+        public String getCommand() {
+            return command;
+        }
+        public static Optional<CommandType> fromString(String cmd) {
+            for (CommandType type : CommandType.values()) {
+                if (type.command.equals(cmd)) {
+                    return Optional.of(type);
+                }
+            }
+            return Optional.empty();
+        }
+    }
+
     public static void main(String[] args) {
         String opening = "Hello! I'm KLChatBot,\n" +
                       "What can I do for you?\n";
@@ -22,10 +50,18 @@ public class KLChatBot {
                     command = input.substring(0, firstSpace).trim();
                     argument = input.substring(firstSpace + 1).trim();
                 }
-                switch (command) {
-                    case "bye":
+                Optional<CommandType> commandTypeOpt = CommandType.fromString(command);
+                if (!commandTypeOpt.isPresent()) {
+                    System.out.print("____________________________________________________________\n");
+                    System.out.println(" Error: Invalid command.");
+                    System.out.print("____________________________________________________________\n");
+                    continue;
+                }
+                CommandType commandType = commandTypeOpt.get();
+                switch (commandType) {
+                    case BYE:
                         break;
-                    case "list":
+                    case LIST:
                         System.out.print("____________________________________________________________\n");
                         System.out.println(" Here are the tasks in your list:");
                         for (int i = 0; i < tasks.size(); i++) {
@@ -33,7 +69,7 @@ public class KLChatBot {
                         }
                         System.out.print("____________________________________________________________\n");
                         continue;
-                    case "mark":
+                    case MARK:
                         try {
                             int idx = Integer.parseInt(argument) - 1;
                             if (idx < 0 || idx >= tasks.size()) {
@@ -50,7 +86,7 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
-                    case "unmark":
+                    case UNMARK:
                         try {
                             int idx = Integer.parseInt(argument) - 1;
                             if (idx < 0 || idx >= tasks.size()) {
@@ -67,7 +103,7 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
-                    case "todo":
+                    case TODO:
                         if (argument.isEmpty()) {
                             System.out.print("____________________________________________________________\n");
                             System.out.println(" Error: The description of a todo cannot be empty.");
@@ -82,7 +118,7 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
-                    case "deadline":
+                    case DEADLINE:
                         String[] parts = argument.split(" /by ", 2);
                         String desc = parts[0].trim();
                         String by = parts.length > 1 ? parts[1].trim() : "";
@@ -100,7 +136,7 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
-                    case "event":
+                    case EVENT:
                         String[] eventParts = argument.split(" /from ", 2);
                         String eventDesc = eventParts[0].trim();
                         String from = "", to = "";
@@ -125,7 +161,7 @@ public class KLChatBot {
                             System.out.print("____________________________________________________________\n");
                         }
                         continue;
-                    case "delete":
+                    case DELETE:
                         try {
                             int idx = Integer.parseInt(argument) - 1;
                             if (idx < 0 || idx >= tasks.size()) {
@@ -142,11 +178,6 @@ public class KLChatBot {
                             System.out.println(" Error: Invalid task number.");
                             System.out.print("____________________________________________________________\n");
                         }
-                        continue;
-                    default:
-                        System.out.print("____________________________________________________________\n");
-                        System.out.println(" Error: Invalid command.");
-                        System.out.print("____________________________________________________________\n");
                         continue;
                 }
 
