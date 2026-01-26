@@ -38,7 +38,7 @@ public class KLChatBot {
         System.out.println(opening);
 
         BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = Storage.loadTasks();
 
         while (true) {
             try {
@@ -80,6 +80,7 @@ public class KLChatBot {
                             System.out.println(" Nice! I've marked this task as done:");
                             System.out.println("   " + tasks.get(idx));
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         } catch (IllegalArgumentException e) {
                             System.out.print("____________________________________________________________\n");
                             System.out.println(" Error: Invalid task number.");
@@ -97,6 +98,7 @@ public class KLChatBot {
                             System.out.println(" OK, I've marked this task as not done yet:");
                             System.out.println("   " + tasks.get(idx));
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         } catch (IllegalArgumentException e) {
                             System.out.print("____________________________________________________________\n");
                             System.out.println(" Error: Invalid task number.");
@@ -116,6 +118,7 @@ public class KLChatBot {
                             System.out.println("   " + t);
                             System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         }
                         continue;
                     case DEADLINE:
@@ -134,6 +137,7 @@ public class KLChatBot {
                             System.out.println("   " + t);
                             System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         }
                         continue;
                     case EVENT:
@@ -159,6 +163,7 @@ public class KLChatBot {
                             System.out.println("   " + t);
                             System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         }
                         continue;
                     case DELETE:
@@ -173,6 +178,7 @@ public class KLChatBot {
                             System.out.println("   " + removed);
                             System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                             System.out.print("____________________________________________________________\n");
+                            Storage.saveTasks(tasks);
                         } catch (IllegalArgumentException e) {
                             System.out.print("____________________________________________________________\n");
                             System.out.println(" Error: Invalid task number.");
