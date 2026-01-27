@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,13 +23,13 @@ public class CommandRegistry {
      * @param ui the UI helper to inject into the command
      * @return Optional containing the command instance, or empty if command not found
      */
-    public Optional<Command> getCommand(String commandName, List<Task> tasks, Ui ui) {
+    public Optional<Command> getCommand(String commandName, TaskList tasks, Ui ui) {
         Class<? extends Command> commandClass = commands.get(commandName);
         if (commandClass != null) {
             try {
                 // Inject the tasks list into the command constructor
                 return Optional.of(
-                    commandClass.getConstructor(List.class, Ui.class).newInstance(tasks, ui)
+                    commandClass.getConstructor(TaskList.class, Ui.class).newInstance(tasks, ui)
                 );
             } catch (Exception e) {
                 return Optional.empty();

@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to mark a task as done.
  */
@@ -7,7 +5,7 @@ public class MarkCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public MarkCommand(List<Task> tasks, Ui ui) {
+    public MarkCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

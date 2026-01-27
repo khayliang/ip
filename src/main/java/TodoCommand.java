@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to add a todo task.
  */
@@ -7,7 +5,7 @@ public class TodoCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public TodoCommand(List<Task> tasks, Ui ui) {
+    public TodoCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

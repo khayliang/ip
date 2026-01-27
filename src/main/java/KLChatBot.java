@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.util.List;
 import java.util.Optional;
 
 public class KLChatBot {
@@ -8,7 +7,7 @@ public class KLChatBot {
         ui.showWelcome();
 
         BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
-        List<Task> tasks = Storage.loadTasks();
+        TaskList tasks = Storage.loadTasks();
         CommandRegistry registry = CommandRegistry.createDefault();
 
         while (true) {

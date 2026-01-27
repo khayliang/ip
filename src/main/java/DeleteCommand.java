@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to delete a task.
  */
@@ -7,7 +5,7 @@ public class DeleteCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public DeleteCommand(List<Task> tasks, Ui ui) {
+    public DeleteCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

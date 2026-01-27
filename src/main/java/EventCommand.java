@@ -1,6 +1,4 @@
 import java.time.format.DateTimeParseException;
-import java.util.List;
-
 /**
  * Command to add an event task.
  */
@@ -8,7 +6,7 @@ public class EventCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public EventCommand(List<Task> tasks, Ui ui) {
+    public EventCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to exit the application.
  */
@@ -7,7 +5,7 @@ public class ByeCommand extends Command {
     /**
      * Constructor that receives the shared tasks list (not used, but consistent interface)
      */
-    public ByeCommand(List<Task> tasks, Ui ui) {
+    public ByeCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

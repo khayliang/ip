@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to mark a task as not done.
  */
@@ -7,7 +5,7 @@ public class UnmarkCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public UnmarkCommand(List<Task> tasks, Ui ui) {
+    public UnmarkCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

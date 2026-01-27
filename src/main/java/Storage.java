@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Storage {
     private static final String DATA_DIR = "./data";
@@ -21,10 +19,10 @@ public class Storage {
      *
      * @return a list of tasks loaded from the file, or an empty list if file doesn't exist
      */
-    public static List<Task> loadTasks() {
+    public static TaskList loadTasks() {
         cleanupTempFile();
 
-        List<Task> tasks = new ArrayList<>();
+        TaskList tasks = new TaskList();
         File file = new File(DATA_FILE);
 
         if (!file.exists()) {
@@ -63,7 +61,7 @@ public class Storage {
      *
      * @param tasks the list of tasks to save
      */
-    public static void saveTasks(List<Task> tasks) {
+    public static void saveTasks(TaskList tasks) {
         try {
             File dir = new File(DATA_DIR);
             if (!dir.exists()) {

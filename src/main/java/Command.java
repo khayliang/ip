@@ -1,12 +1,10 @@
-import java.util.List;
-
 /**
  * Abstract base class for all commands.
  * Each command receives the tasks list and UI through constructor injection,
  * making dependencies explicit and the command testable.
  */
 public abstract class Command {
-    protected List<Task> tasks;
+    protected TaskList tasks;
     protected Ui ui;
 
     /**
@@ -14,7 +12,7 @@ public abstract class Command {
      * @param tasks the shared task list that this command will operate on
      * @param ui the UI helper for output
      */
-    public Command(List<Task> tasks, Ui ui) {
+    public Command(TaskList tasks, Ui ui) {
         this.tasks = tasks;
         this.ui = ui;
     }

@@ -1,6 +1,4 @@
 import java.time.format.DateTimeParseException;
-import java.util.List;
-
 /**
  * Command to add a deadline task.
  */
@@ -8,7 +6,7 @@ public class DeadlineCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public DeadlineCommand(List<Task> tasks, Ui ui) {
+    public DeadlineCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 

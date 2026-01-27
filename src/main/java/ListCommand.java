@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Command to list all tasks.
  */
@@ -7,7 +5,7 @@ public class ListCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public ListCommand(List<Task> tasks, Ui ui) {
+    public ListCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 
