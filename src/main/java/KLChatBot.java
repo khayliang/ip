@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -130,14 +131,21 @@ public class KLChatBot {
                             System.out.println(" Error: The description and deadline must not be empty.");
                             System.out.print("____________________________________________________________\n");
                         } else {
-                            Task t = new Deadline(desc, by);
-                            tasks.add(t);
-                            System.out.print("____________________________________________________________\n");
-                            System.out.println(" Got it. I've added this task:");
-                            System.out.println("   " + t);
-                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                            System.out.print("____________________________________________________________\n");
-                            Storage.saveTasks(tasks);
+                            try {
+                                DateTimeParser.DateTimeInfo dateTimeInfo = DateTimeParser.parse(by);
+                                Task t = new Deadline(desc, dateTimeInfo.dateTime);
+                                tasks.add(t);
+                                System.out.print("____________________________________________________________\n");
+                                System.out.println(" Got it. I've added this task:");
+                                System.out.println("   " + t);
+                                System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                                System.out.print("____________________________________________________________\n");
+                                Storage.saveTasks(tasks);
+                            } catch (DateTimeParseException e) {
+                                System.out.print("____________________________________________________________\n");
+                                System.out.println(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
+                                System.out.print("____________________________________________________________\n");
+                            }
                         }
                         continue;
                     case EVENT:
@@ -156,14 +164,22 @@ public class KLChatBot {
                             System.out.println(" Error: The description, from, and to fields must not be empty.");
                             System.out.print("____________________________________________________________\n");
                         } else {
-                            Task t = new Event(eventDesc, from, to);
-                            tasks.add(t);
-                            System.out.print("____________________________________________________________\n");
-                            System.out.println(" Got it. I've added this task:");
-                            System.out.println("   " + t);
-                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                            System.out.print("____________________________________________________________\n");
-                            Storage.saveTasks(tasks);
+                            try {
+                                DateTimeParser.DateTimeInfo fromDateTime = DateTimeParser.parse(from);
+                                DateTimeParser.DateTimeInfo toDateTime = DateTimeParser.parse(to);
+                                Task t = new Event(eventDesc, fromDateTime.dateTime, toDateTime.dateTime);
+                                tasks.add(t);
+                                System.out.print("____________________________________________________________\n");
+                                System.out.println(" Got it. I've added this task:");
+                                System.out.println("   " + t);
+                                System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                                System.out.print("____________________________________________________________\n");
+                                Storage.saveTasks(tasks);
+                            } catch (DateTimeParseException e) {
+                                System.out.print("____________________________________________________________\n");
+                                System.out.println(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
+                                System.out.print("____________________________________________________________\n");
+                            }
                         }
                         continue;
                     case DELETE:

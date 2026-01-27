@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +127,8 @@ public class Storage {
                     throw new IllegalArgumentException("Invalid Deadline format");
                 }
                 String by = parts[3].trim();
-                task = new Deadline(description, by);
+                LocalDateTime byDateTime = LocalDateTime.parse(by);
+                task = new Deadline(description, byDateTime);
                 break;
             case "E":
                 if (parts.length < 5) {
@@ -134,7 +136,9 @@ public class Storage {
                 }
                 String from = parts[3].trim();
                 String to = parts[4].trim();
-                task = new Event(description, from, to);
+                LocalDateTime fromDateTime = LocalDateTime.parse(from);
+                LocalDateTime toDateTime = LocalDateTime.parse(to);
+                task = new Event(description, fromDateTime, toDateTime);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown task type: " + type);
@@ -155,9 +159,9 @@ public class Storage {
         line.append(type).append("|").append(isDone).append("|").append(task.description);
 
         if (task instanceof Deadline deadline) {
-            line.append("|").append(deadline.by);
+            line.append("|").append(deadline.by.toString());
         } else if (task instanceof Event event) {
-            line.append("|").append(event.from).append("|").append(event.to);
+            line.append("|").append(event.from.toString()).append("|").append(event.to.toString());
         }
 
         return line.toString();
