@@ -6,6 +6,9 @@ if not exist ..\bin mkdir ..\bin
 REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
 
+REM delete saved tasks from previous run
+if exist data\tasks del data\tasks
+
 REM compile the code into the bin folder
 dir /s /b ..\src\main\java\*.java > sources.txt
 javac  -cp ..\src\main\java -Xlint:none -d ..\bin @sources.txt
