@@ -1,15 +1,23 @@
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
-    public String by;
-    public Deadline(String description, String by) {
+    public LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
+
     @Override
     public String getTypeIcon() {
         return "D";
     }
+
     @Override
     public String toString() {
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + by + ")";
+        String byStr = by.toLocalTime().equals(java.time.LocalTime.MIDNIGHT)
+            ? by.format(DateTimeParser.OUTPUT_DATE_FORMAT)
+            : by.format(DateTimeParser.OUTPUT_DATETIME_FORMAT);
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + byStr + ")";
     }
 }
