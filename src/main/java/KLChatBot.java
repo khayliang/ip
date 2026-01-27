@@ -14,13 +14,9 @@ public class KLChatBot {
         while (true) {
             try {
                 String input = stdin.readLine();
-                String commandName = input.trim();
-                String argument = "";
-                int firstSpace = input.indexOf(' ');
-                if (firstSpace != -1) {
-                    commandName = input.substring(0, firstSpace).trim();
-                    argument = input.substring(firstSpace + 1).trim();
-                }
+                UserInputParser.ParsedInput parsedInput = UserInputParser.parse(input);
+                String commandName = parsedInput.getCommandName();
+                String argument = parsedInput.getArgument();
 
                 Optional<Command> commandOpt = registry.getCommand(commandName, tasks, ui);
                 if (!commandOpt.isPresent()) {
