@@ -4,6 +4,7 @@ unmark 1
 deadline return book /by 2026-01-28
 event project meeting /from 2026-02-01 1400 /to 2026-02-01 1600
 list
+find book
 delete 1
 list
 bye
