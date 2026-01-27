@@ -1,3 +1,5 @@
+package klchatbot.storage;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -5,6 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+
+import klchatbot.task.Deadline;
+import klchatbot.task.Event;
+import klchatbot.task.Task;
+import klchatbot.task.TaskList;
+import klchatbot.task.Todo;
 
 public class Storage {
     private static final String DATA_DIR = "./data";
@@ -154,7 +162,7 @@ public class Storage {
         int isDone = task.isDone ? 1 : 0;
 
         StringBuilder line = new StringBuilder();
-        line.append(type).append("|").append(isDone).append("|").append(task.description);
+        line.append(type).append("|").append(isDone).append("|").append(task.getDescription());
 
         if (task instanceof Deadline deadline) {
             line.append("|").append(deadline.by.toString());

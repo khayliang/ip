@@ -1,3 +1,5 @@
+package klchatbot.task;
+
 public abstract class Task {
     protected String description;
     public boolean isDone;
@@ -21,6 +23,10 @@ public abstract class Task {
 
     public String getTypeIcon() {
         return "?";
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

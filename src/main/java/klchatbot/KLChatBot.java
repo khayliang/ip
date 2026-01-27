@@ -1,5 +1,14 @@
+package klchatbot;
+
 import java.io.BufferedReader;
 import java.util.Optional;
+
+import klchatbot.command.Command;
+import klchatbot.command.CommandRegistry;
+import klchatbot.parser.UserInputParser;
+import klchatbot.storage.Storage;
+import klchatbot.task.TaskList;
+import klchatbot.ui.Ui;
 
 public class KLChatBot {
     public static void main(String[] args) {

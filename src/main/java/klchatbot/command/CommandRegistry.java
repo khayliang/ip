@@ -1,6 +1,11 @@
+package klchatbot.command;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import klchatbot.task.TaskList;
+import klchatbot.ui.Ui;
 
 /**
  * Registry for managing command types and creating command instances.

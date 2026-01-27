@@ -1,3 +1,5 @@
+package klchatbot.ui;
+
 public class Ui {
     private static final String LINE = "____________________________________________________________";
 

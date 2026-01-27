@@ -1,3 +1,5 @@
+package klchatbot.parser;
+
 public class UserInputParser {
     /**
      * Parses a raw user input string into a command name and its argument.

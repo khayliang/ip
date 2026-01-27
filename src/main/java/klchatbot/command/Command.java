@@ -3,6 +3,11 @@
  * Each command receives the tasks list and UI through constructor injection,
  * making dependencies explicit and the command testable.
  */
+package klchatbot.command;
+
+import klchatbot.task.TaskList;
+import klchatbot.ui.Ui;
+
 public abstract class Command {
     protected TaskList tasks;
     protected Ui ui;

@@ -1,11 +1,18 @@
+package klchatbot.command;
+
+import klchatbot.storage.Storage;
+import klchatbot.task.Task;
+import klchatbot.task.TaskList;
+import klchatbot.ui.Ui;
+
 /**
- * Command to mark a task as done.
+ * Command to delete a task.
  */
-public class MarkCommand extends Command {
+public class DeleteCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public MarkCommand(TaskList tasks, Ui ui) {
+    public DeleteCommand(TaskList tasks, Ui ui) {
         super(tasks, ui);
     }
 
@@ -18,13 +25,12 @@ public class MarkCommand extends Command {
                 throw new IllegalArgumentException("Invalid task number");
             }
 
-            // Now we can use this.tasks which was injected
-            Task task = this.tasks.get(idx);
-            task.markDone();
+            Task removed = this.tasks.remove(idx);
 
             ui.printBox(
-                " Nice! I've marked this task as done:",
-                "   " + task
+                " Noted. I've removed this task:",
+                "   " + removed,
+                " Now you have " + this.tasks.size() + " tasks in the list."
             );
 
             Storage.saveTasks(this.tasks);
@@ -38,6 +44,6 @@ public class MarkCommand extends Command {
 
     @Override
     public String getCommandName() {
-        return "mark";
+        return "delete";
     }
 }

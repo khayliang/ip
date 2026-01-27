@@ -1,4 +1,13 @@
+package klchatbot.command;
+
 import java.time.format.DateTimeParseException;
+
+import klchatbot.parser.DateTimeParser;
+import klchatbot.storage.Storage;
+import klchatbot.task.Event;
+import klchatbot.task.Task;
+import klchatbot.task.TaskList;
+import klchatbot.ui.Ui;
 /**
  * Command to add an event task.
  */
