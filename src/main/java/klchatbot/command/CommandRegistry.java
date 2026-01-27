@@ -56,6 +56,7 @@ public class CommandRegistry {
         registry.register("deadline", DeadlineCommand.class);
         registry.register("event", EventCommand.class);
         registry.register("delete", DeleteCommand.class);
+        registry.register("find", FindCommand.class);
         return registry;
     }
 }

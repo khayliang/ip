@@ -12,6 +12,12 @@ then
     rm ACTUAL.TXT
 fi
 
+# delete saved tasks from previous run
+if [ -e "./data/tasks" ]
+then
+    rm ./data/tasks
+fi
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin $(find ../src/main/java -name "*.java")
 then
