@@ -8,8 +8,8 @@ public class EventCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public EventCommand(List<Task> tasks) {
-        super(tasks);
+    public EventCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class EventCommand extends Command {
         }
 
         if (eventDesc.isEmpty() || from.isEmpty() || to.isEmpty()) {
-            printBox(" Error: The description, from, and to fields must not be empty.");
+            ui.printBox(" Error: The description, from, and to fields must not be empty.");
             return false;  // Don't exit the application
         }
 
@@ -37,13 +37,13 @@ public class EventCommand extends Command {
             DateTimeParser.DateTimeInfo toDateTime = DateTimeParser.parse(to);
             newTask = new Event(eventDesc, fromDateTime.dateTime, toDateTime.dateTime);
         } catch (DateTimeParseException e) {
-            printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
+            ui.printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
             return false;  // Don't exit the application
         }
 
         this.tasks.add(newTask);
 
-        printBox(
+        ui.printBox(
             " Got it. I've added this task:",
             "   " + newTask,
             " Now you have " + this.tasks.size() + " tasks in the list."

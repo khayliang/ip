@@ -2,18 +2,21 @@ import java.util.List;
 
 /**
  * Abstract base class for all commands.
- * Each command receives the tasks list through constructor injection,
+ * Each command receives the tasks list and UI through constructor injection,
  * making dependencies explicit and the command testable.
  */
 public abstract class Command {
     protected List<Task> tasks;
+    protected Ui ui;
 
     /**
-     * Constructor that injects the tasks list dependency
+     * Constructor that injects the tasks list and UI dependencies
      * @param tasks the shared task list that this command will operate on
+     * @param ui the UI helper for output
      */
-    public Command(List<Task> tasks) {
+    public Command(List<Task> tasks, Ui ui) {
         this.tasks = tasks;
+        this.ui = ui;
     }
 
     /**
@@ -28,14 +31,4 @@ public abstract class Command {
      */
     public abstract String getCommandName();
 
-    /**
-     * Helper method for consistent formatted output
-     */
-    protected void printBox(String... lines) {
-        System.out.print("____________________________________________________________\n");
-        for (String line : lines) {
-            System.out.println(line);
-        }
-        System.out.print("____________________________________________________________\n");
-    }
 }

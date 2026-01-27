@@ -7,8 +7,8 @@ public class UnmarkCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public UnmarkCommand(List<Task> tasks) {
-        super(tasks);
+    public UnmarkCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class UnmarkCommand extends Command {
             Task task = this.tasks.get(idx);
             task.markUndone();
 
-            printBox(
+            ui.printBox(
                 " OK, I've marked this task as not done yet:",
                 "   " + task
             );
@@ -33,7 +33,7 @@ public class UnmarkCommand extends Command {
             return false;  // Don't exit the application
 
         } catch (Exception e) {
-            printBox(" Error: Invalid task number.");
+            ui.printBox(" Error: Invalid task number.");
             return false;  // Don't exit the application
         }
     }

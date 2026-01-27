@@ -7,13 +7,13 @@ public class ListCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public ListCommand(List<Task> tasks) {
-        super(tasks);
+    public ListCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
     public boolean execute(String argument) {
-        printBox(" Here are the tasks in your list:", buildTaskList());
+        ui.printBox(" Here are the tasks in your list:", buildTaskList());
         return false;  // Don't exit the application
     }
 

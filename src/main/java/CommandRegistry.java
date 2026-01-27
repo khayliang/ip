@@ -5,7 +5,7 @@ import java.util.Optional;
 
 /**
  * Registry for managing command types and creating command instances.
- * Uses reflection to instantiate commands with the tasks list injected.
+ * Uses reflection to instantiate commands with the tasks list and UI injected.
  */
 public class CommandRegistry {
     private Map<String, Class<? extends Command>> commands = new HashMap<>();
@@ -18,18 +18,19 @@ public class CommandRegistry {
     }
 
     /**
-     * Gets a command instance with the tasks list injected
+     * Gets a command instance with the tasks list and UI injected
      * @param commandName the name of the command
      * @param tasks the shared task list to inject into the command
+     * @param ui the UI helper to inject into the command
      * @return Optional containing the command instance, or empty if command not found
      */
-    public Optional<Command> getCommand(String commandName, List<Task> tasks) {
+    public Optional<Command> getCommand(String commandName, List<Task> tasks, Ui ui) {
         Class<? extends Command> commandClass = commands.get(commandName);
         if (commandClass != null) {
             try {
                 // Inject the tasks list into the command constructor
                 return Optional.of(
-                    commandClass.getConstructor(List.class).newInstance(tasks)
+                    commandClass.getConstructor(List.class, Ui.class).newInstance(tasks, ui)
                 );
             } catch (Exception e) {
                 return Optional.empty();

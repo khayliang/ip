@@ -7,8 +7,8 @@ public class TodoCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public TodoCommand(List<Task> tasks) {
-        super(tasks);
+    public TodoCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class TodoCommand extends Command {
         String description = argument.trim();
 
         if (description.isEmpty()) {
-            printBox(" Error: The description of a todo cannot be empty.");
+            ui.printBox(" Error: The description of a todo cannot be empty.");
             return false;  // Don't exit the application
         }
 
@@ -24,7 +24,7 @@ public class TodoCommand extends Command {
         Task newTask = new Todo(description);
         this.tasks.add(newTask);
 
-        printBox(
+        ui.printBox(
             " Got it. I've added this task:",
             "   " + newTask,
             " Now you have " + this.tasks.size() + " tasks in the list."

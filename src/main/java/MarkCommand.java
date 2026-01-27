@@ -7,8 +7,8 @@ public class MarkCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public MarkCommand(List<Task> tasks) {
-        super(tasks);
+    public MarkCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class MarkCommand extends Command {
             Task task = this.tasks.get(idx);
             task.markDone();
 
-            printBox(
+            ui.printBox(
                 " Nice! I've marked this task as done:",
                 "   " + task
             );
@@ -33,7 +33,7 @@ public class MarkCommand extends Command {
             return false;  // Don't exit the application
 
         } catch (Exception e) {
-            printBox(" Error: Invalid task number.");
+            ui.printBox(" Error: Invalid task number.");
             return false;  // Don't exit the application
         }
     }

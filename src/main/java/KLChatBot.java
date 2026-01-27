@@ -4,10 +4,8 @@ import java.util.Optional;
 
 public class KLChatBot {
     public static void main(String[] args) {
-        String opening = "Hello! I'm KLChatBot,\n" +
-                      "What can I do for you?\n";
-        String closing = "\nGoodbye! Have a great day!";
-        System.out.println(opening);
+        Ui ui = new Ui();
+        ui.showWelcome();
 
         BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
         List<Task> tasks = Storage.loadTasks();
@@ -24,11 +22,9 @@ public class KLChatBot {
                     argument = input.substring(firstSpace + 1).trim();
                 }
 
-                Optional<Command> commandOpt = registry.getCommand(commandName, tasks);
+                Optional<Command> commandOpt = registry.getCommand(commandName, tasks, ui);
                 if (!commandOpt.isPresent()) {
-                    System.out.print("____________________________________________________________\n");
-                    System.out.println(" Error: Invalid command.");
-                    System.out.print("____________________________________________________________\n");
+                    ui.showInvalidCommand();
                     continue;
                 }
 
@@ -38,9 +34,9 @@ public class KLChatBot {
                     break;
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred: " + e.getMessage());
+                ui.showError(e.getMessage());
             }
         }
-        System.out.println(closing);
+        ui.showGoodbye();
     }
 }

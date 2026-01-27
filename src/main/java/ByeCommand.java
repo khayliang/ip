@@ -7,8 +7,8 @@ public class ByeCommand extends Command {
     /**
      * Constructor that receives the shared tasks list (not used, but consistent interface)
      */
-    public ByeCommand(List<Task> tasks) {
-        super(tasks);
+    public ByeCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override

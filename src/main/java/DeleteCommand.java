@@ -7,8 +7,8 @@ public class DeleteCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public DeleteCommand(List<Task> tasks) {
-        super(tasks);
+    public DeleteCommand(List<Task> tasks, Ui ui) {
+        super(tasks, ui);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class DeleteCommand extends Command {
 
             Task removed = this.tasks.remove(idx);
 
-            printBox(
+            ui.printBox(
                 " Noted. I've removed this task:",
                 "   " + removed,
                 " Now you have " + this.tasks.size() + " tasks in the list."
@@ -32,7 +32,7 @@ public class DeleteCommand extends Command {
             return false;  // Don't exit the application
 
         } catch (Exception e) {
-            printBox(" Error: Invalid task number.");
+            ui.printBox(" Error: Invalid task number.");
             return false;  // Don't exit the application
         }
     }
