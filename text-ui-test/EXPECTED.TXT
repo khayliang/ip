@@ -16,19 +16,19 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Jan 28 2026)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: Feb 01 2026 1400 to: Feb 01 2026 1600)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] read book
- 2.[D][ ] return book (by: Sunday)
- 3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 2.[D][ ] return book (by: Jan 28 2026)
+ 3.[E][ ] project meeting (from: Feb 01 2026 1400 to: Feb 01 2026 1600)
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
@@ -37,8 +37,8 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1.[D][ ] return book (by: Sunday)
- 2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 1.[D][ ] return book (by: Jan 28 2026)
+ 2.[E][ ] project meeting (from: Feb 01 2026 1400 to: Feb 01 2026 1600)
 ____________________________________________________________
 
 Goodbye! Have a great day!
