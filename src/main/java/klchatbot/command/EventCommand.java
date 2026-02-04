@@ -7,7 +7,7 @@ import klchatbot.storage.Storage;
 import klchatbot.task.Event;
 import klchatbot.task.Task;
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 /**
  * Command to add an event task.
  */
@@ -15,12 +15,12 @@ public class EventCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public EventCommand(TaskList tasks, Ui ui) {
-        super(tasks, ui);
+    public EventCommand(TaskList tasks, ResultFormatter formatter) {
+        super(tasks, formatter);
     }
 
     @Override
-    public boolean execute(String argument) {
+    public String execute(String argument) {
         String[] eventParts = argument.split(" /from ", 2);
         String eventDesc = eventParts[0].trim();
         String from = "", to = "";
@@ -34,8 +34,7 @@ public class EventCommand extends Command {
         }
 
         if (eventDesc.isEmpty() || from.isEmpty() || to.isEmpty()) {
-            ui.printBox(" Error: The description, from, and to fields must not be empty.");
-            return false;  // Don't exit the application
+            return formatter.printBox(" Error: The description, from, and to fields must not be empty.");
         }
 
         Task newTask;
@@ -44,20 +43,19 @@ public class EventCommand extends Command {
             DateTimeParser.DateTimeInfo toDateTime = DateTimeParser.parse(to);
             newTask = new Event(eventDesc, fromDateTime.dateTime, toDateTime.dateTime);
         } catch (DateTimeParseException e) {
-            ui.printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
-            return false;  // Don't exit the application
+            return formatter.printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }
 
         this.tasks.add(newTask);
 
-        ui.printBox(
+        String response = formatter.printBox(
             " Got it. I've added this task:",
             "   " + newTask,
             " Now you have " + this.tasks.size() + " tasks in the list."
         );
 
         Storage.saveTasks(this.tasks);
-        return false;  // Don't exit the application
+        return response;
     }
 
     @Override

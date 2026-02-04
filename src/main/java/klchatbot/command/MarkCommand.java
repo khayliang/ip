@@ -3,7 +3,7 @@ package klchatbot.command;
 import klchatbot.storage.Storage;
 import klchatbot.task.Task;
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 
 /**
  * Command to mark a task as done.
@@ -12,12 +12,12 @@ public class MarkCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public MarkCommand(TaskList tasks, Ui ui) {
-        super(tasks, ui);
+    public MarkCommand(TaskList tasks, ResultFormatter formatter) {
+        super(tasks, formatter);
     }
 
     @Override
-    public boolean execute(String argument) {
+    public String execute(String argument) {
         try {
             int idx = Integer.parseInt(argument.trim()) - 1;
 
@@ -29,17 +29,16 @@ public class MarkCommand extends Command {
             Task task = this.tasks.get(idx);
             task.markDone();
 
-            ui.printBox(
+            String response = formatter.printBox(
                 " Nice! I've marked this task as done:",
                 "   " + task
             );
 
             Storage.saveTasks(this.tasks);
-            return false;  // Don't exit the application
+            return response;
 
         } catch (Exception e) {
-            ui.printBox(" Error: Invalid task number.");
-            return false;  // Don't exit the application
+            return formatter.printBox(" Error: Invalid task number.");
         }
     }
 

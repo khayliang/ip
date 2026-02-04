@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 
 /**
  * Registry for managing command types and creating command instances.
@@ -25,16 +25,16 @@ public class CommandRegistry {
      * Gets a command instance with the tasks list and UI injected
      * @param commandName the name of the command
      * @param tasks the shared task list to inject into the command
-     * @param ui the UI helper to inject into the command
+     * @param formatter the UI helper to inject into the command
      * @return Optional containing the command instance, or empty if command not found
      */
-    public Optional<Command> getCommand(String commandName, TaskList tasks, Ui ui) {
+    public Optional<Command> getCommand(String commandName, TaskList tasks, ResultFormatter formatter) {
         Class<? extends Command> commandClass = commands.get(commandName);
         if (commandClass != null) {
             try {
                 // Inject the tasks list into the command constructor
                 return Optional.of(
-                    commandClass.getConstructor(TaskList.class, Ui.class).newInstance(tasks, ui)
+                    commandClass.getConstructor(TaskList.class, ResultFormatter.class).newInstance(tasks, formatter)
                 );
             } catch (Exception e) {
                 return Optional.empty();
