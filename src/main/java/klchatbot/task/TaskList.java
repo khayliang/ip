@@ -1,6 +1,7 @@
 package klchatbot.task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class TaskList implements Iterable<Task> {
         this.tasks = new ArrayList<>();
     }
 
-    public TaskList(List<Task> tasks) {
-        this.tasks = new ArrayList<>(tasks);
+    public TaskList(Task... tasks) {
+        this.tasks = new ArrayList<>(Arrays.asList(tasks));
     }
 
     public int size() {
