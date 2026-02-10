@@ -55,6 +55,7 @@ public class CommandRegistry {
         registry.register("todo", TodoCommand.class);
         registry.register("deadline", DeadlineCommand.class);
         registry.register("event", EventCommand.class);
+        registry.register("duration", DurationCommand.class);
         registry.register("delete", DeleteCommand.class);
         registry.register("find", FindCommand.class);
         return registry;

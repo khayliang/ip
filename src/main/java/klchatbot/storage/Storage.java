@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import klchatbot.task.FixedDuration;
 import klchatbot.task.Deadline;
 import klchatbot.task.Event;
 import klchatbot.task.Task;
@@ -148,6 +149,13 @@ public class Storage {
                 LocalDateTime toDateTime = LocalDateTime.parse(to);
                 task = new Event(description, fromDateTime, toDateTime);
                 break;
+            case "F":
+                if (parts.length < 4) {
+                    throw new IllegalArgumentException("Invalid FixedDuration format");
+                }
+                int durationMinutes = Integer.parseInt(parts[3].trim());
+                task = new FixedDuration(description, durationMinutes);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown task type: " + type);
         }
@@ -171,6 +179,8 @@ public class Storage {
             line.append("|").append(deadline.getBy().toString());
         } else if (task instanceof Event event) {
             line.append("|").append(event.getFrom().toString()).append("|").append(event.getTo().toString());
+        } else if (task instanceof FixedDuration fixedDuration) {
+            line.append("|").append(fixedDuration.getDurationMinutes());
         }
 
         return line.toString();
