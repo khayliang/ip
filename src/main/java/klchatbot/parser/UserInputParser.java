@@ -8,6 +8,7 @@ public class UserInputParser {
      * @return ParsedInput with command name and argument
      */
     public static ParsedInput parse(String input) {
+        assert input != null : "input must not be null";
         String trimmedInput = input.trim();
         String commandName = trimmedInput;
         String argument = "";
