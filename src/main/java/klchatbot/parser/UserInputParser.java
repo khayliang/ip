@@ -8,12 +8,13 @@ public class UserInputParser {
      * @return ParsedInput with command name and argument
      */
     public static ParsedInput parse(String input) {
-        String commandName = input.trim();
+        String trimmedInput = input.trim();
+        String commandName = trimmedInput;
         String argument = "";
-        int firstSpace = input.indexOf(' ');
+        int firstSpace = trimmedInput.indexOf(' ');
         if (firstSpace != -1) {
-            commandName = input.substring(0, firstSpace).trim();
-            argument = input.substring(firstSpace + 1).trim();
+            commandName = trimmedInput.substring(0, firstSpace).trim();
+            argument = trimmedInput.substring(firstSpace + 1).trim();
         }
         return new ParsedInput(commandName, argument);
     }

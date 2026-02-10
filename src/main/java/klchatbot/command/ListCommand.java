@@ -1,7 +1,7 @@
 package klchatbot.command;
 
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 
 /**
  * Command to list all tasks.
@@ -10,14 +10,13 @@ public class ListCommand extends Command {
     /**
      * Constructor that receives the shared tasks list
      */
-    public ListCommand(TaskList tasks, Ui ui) {
-        super(tasks, ui);
+    public ListCommand(TaskList tasks, ResultFormatter formatter) {
+        super(tasks, formatter);
     }
 
     @Override
-    public boolean execute(String argument) {
-        ui.printBox(" Here are the tasks in your list:", buildTaskList());
-        return false;  // Don't exit the application
+    public String execute(String argument) {
+        return formatter.printBox(" Here are the tasks in your list:", buildTaskList());
     }
 
     @Override

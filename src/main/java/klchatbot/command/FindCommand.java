@@ -2,7 +2,7 @@ package klchatbot.command;
 
 import klchatbot.task.Task;
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 
 /**
  * Command to find tasks containing a substring in the description.
@@ -11,16 +11,15 @@ public class FindCommand extends Command {
     /**
      * Constructor that receives the shared tasks list.
      */
-    public FindCommand(TaskList tasks, Ui ui) {
-        super(tasks, ui);
+    public FindCommand(TaskList tasks, ResultFormatter formatter) {
+        super(tasks, formatter);
     }
 
     @Override
-    public boolean execute(String argument) {
+    public String execute(String argument) {
         String keyword = argument == null ? "" : argument.trim();
         if (keyword.isEmpty()) {
-            ui.printBox(" Error: The find command requires a search string.");
-            return false;
+            return formatter.printBox(" Error: The find command requires a search string.");
         }
 
         String lowered = keyword.toLowerCase();
@@ -39,11 +38,10 @@ public class FindCommand extends Command {
         }
 
         if (matches == 0) {
-            ui.printBox(" No matching tasks found.");
+            return formatter.printBox(" No matching tasks found.");
         } else {
-            ui.printBox(" Here are the matching tasks in your list:", sb.toString());
+            return formatter.printBox(" Here are the matching tasks in your list:", sb.toString());
         }
-        return false;
     }
 
     @Override

@@ -6,28 +6,28 @@
 package klchatbot.command;
 
 import klchatbot.task.TaskList;
-import klchatbot.ui.Ui;
+import klchatbot.response.ResultFormatter;
 
 public abstract class Command {
     protected TaskList tasks;
-    protected Ui ui;
+    protected ResultFormatter formatter;
 
     /**
      * Constructor that injects the tasks list and UI dependencies
      * @param tasks the shared task list that this command will operate on
-     * @param ui the UI helper for output
+     * @param formatter the response helper for formatting
      */
-    public Command(TaskList tasks, Ui ui) {
+    public Command(TaskList tasks, ResultFormatter formatter) {
         this.tasks = tasks;
-        this.ui = ui;
+        this.formatter = formatter;
     }
 
     /**
      * Executes the command with the given argument
      * @param argument the unparsed argument string after the command name
-     * @return true if the application should exit, false otherwise
+     * @return response string to show the user
      */
-    public abstract boolean execute(String argument);
+    public abstract String execute(String argument);
 
     /**
      * Gets the command keyword (e.g., "todo", "deadline")
