@@ -162,15 +162,15 @@ public class Storage {
     private static String taskToFileLine(Task task) {
         assert task != null : "task must not be null";
         String type = task.getTypeIcon();
-        int isDone = task.isDone ? 1 : 0;
+        int isDone = task.isDone() ? 1 : 0;
 
         StringBuilder line = new StringBuilder();
         line.append(type).append("|").append(isDone).append("|").append(task.getDescription());
 
         if (task instanceof Deadline deadline) {
-            line.append("|").append(deadline.by.toString());
+            line.append("|").append(deadline.getBy().toString());
         } else if (task instanceof Event event) {
-            line.append("|").append(event.from.toString()).append("|").append(event.to.toString());
+            line.append("|").append(event.getFrom().toString()).append("|").append(event.getTo().toString());
         }
 
         return line.toString();

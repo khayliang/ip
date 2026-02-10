@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 import klchatbot.parser.DateTimeParser;
 
 public class Deadline extends Task {
-    public LocalDateTime by;
+    private final LocalDateTime by;
 
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
+    }
+
+    public LocalDateTime getBy() {
+        return by;
     }
 
     @Override
@@ -19,9 +23,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        String byStr = by.toLocalTime().equals(java.time.LocalTime.MIDNIGHT)
-            ? by.format(DateTimeParser.OUTPUT_DATE_FORMAT)
-            : by.format(DateTimeParser.OUTPUT_DATETIME_FORMAT);
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + byStr + ")";
+        String byStr = DateTimeParser.format(by);
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + getDescription() + " (by: " + byStr + ")";
     }
 }

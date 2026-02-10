@@ -14,21 +14,25 @@ public class DateTimeParser {
     public static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy HHmm");
 
     public static class DateTimeInfo {
-        public LocalDateTime dateTime;
-        public String originalString;
+        private final LocalDateTime dateTime;
+        private final String originalString;
 
         public DateTimeInfo(LocalDateTime dateTime, String originalString) {
             this.dateTime = dateTime;
             this.originalString = originalString;
         }
 
+        public LocalDateTime getDateTime() {
+            return dateTime;
+        }
+
+        public String getOriginalString() {
+            return originalString;
+        }
+
         @Override
         public String toString() {
-            if (dateTime.toLocalTime().equals(LocalTime.MIDNIGHT)) {
-                return dateTime.format(OUTPUT_DATE_FORMAT);
-            } else {
-                return dateTime.format(OUTPUT_DATETIME_FORMAT);
-            }
+            return format(dateTime);
         }
     }
 
@@ -56,5 +60,12 @@ public class DateTimeParser {
                 throw new DateTimeParseException("Invalid date/time format. Expected: yyyy-MM-dd or yyyy-MM-dd HHmm", trimmed, 0);
             }
         }
+    }
+
+    public static String format(LocalDateTime dateTime) {
+        if (dateTime.toLocalTime().equals(LocalTime.MIDNIGHT)) {
+            return dateTime.format(OUTPUT_DATE_FORMAT);
+        }
+        return dateTime.format(OUTPUT_DATETIME_FORMAT);
     }
 }
