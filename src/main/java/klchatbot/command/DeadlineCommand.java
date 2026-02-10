@@ -32,7 +32,7 @@ public class DeadlineCommand extends Command {
         Task newTask;
         try {
             DateTimeParser.DateTimeInfo dateTimeInfo = DateTimeParser.parse(by);
-            newTask = new Deadline(desc, dateTimeInfo.dateTime);
+            newTask = new Deadline(desc, dateTimeInfo.getDateTime());
         } catch (DateTimeParseException e) {
             return formatter.printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }

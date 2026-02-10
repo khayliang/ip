@@ -5,13 +5,21 @@ import java.time.LocalDateTime;
 import klchatbot.parser.DateTimeParser;
 
 public class Event extends Task {
-    public LocalDateTime from;
-    public LocalDateTime to;
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;
         this.to = to;
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
     }
 
     @Override
@@ -21,12 +29,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String fromStr = from.toLocalTime().equals(java.time.LocalTime.MIDNIGHT)
-            ? from.format(DateTimeParser.OUTPUT_DATE_FORMAT)
-            : from.format(DateTimeParser.OUTPUT_DATETIME_FORMAT);
-        String toStr = to.toLocalTime().equals(java.time.LocalTime.MIDNIGHT)
-            ? to.format(DateTimeParser.OUTPUT_DATE_FORMAT)
-            : to.format(DateTimeParser.OUTPUT_DATETIME_FORMAT);
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (from: " + fromStr + " to: " + toStr + ")";
+        String fromStr = DateTimeParser.format(from);
+        String toStr = DateTimeParser.format(to);
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + getDescription() + " (from: " + fromStr + " to: " + toStr + ")";
     }
 }
