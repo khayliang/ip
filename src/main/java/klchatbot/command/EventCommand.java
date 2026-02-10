@@ -41,7 +41,7 @@ public class EventCommand extends Command {
         try {
             DateTimeParser.DateTimeInfo fromDateTime = DateTimeParser.parse(from);
             DateTimeParser.DateTimeInfo toDateTime = DateTimeParser.parse(to);
-            newTask = new Event(eventDesc, fromDateTime.dateTime, toDateTime.dateTime);
+            newTask = new Event(eventDesc, fromDateTime.getDateTime(), toDateTime.getDateTime());
         } catch (DateTimeParseException e) {
             return formatter.printBox(" Error: Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HHmm");
         }

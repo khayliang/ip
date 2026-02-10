@@ -12,22 +12,22 @@ public class DateTimeParserTest {
     @Test
     public void parse_dateOnly_returnsStartOfDay() {
         DateTimeParser.DateTimeInfo info = DateTimeParser.parse("2024-01-05");
-        assertEquals(LocalDateTime.of(2024, 1, 5, 0, 0), info.dateTime);
-        assertEquals("2024-01-05", info.originalString);
+        assertEquals(LocalDateTime.of(2024, 1, 5, 0, 0), info.getDateTime());
+        assertEquals("2024-01-05", info.getOriginalString());
     }
 
     @Test
     public void parse_dateTime_returnsExactTime() {
         DateTimeParser.DateTimeInfo info = DateTimeParser.parse("2024-12-31 2359");
-        assertEquals(LocalDateTime.of(2024, 12, 31, 23, 59), info.dateTime);
-        assertEquals("2024-12-31 2359", info.originalString);
+        assertEquals(LocalDateTime.of(2024, 12, 31, 23, 59), info.getDateTime());
+        assertEquals("2024-12-31 2359", info.getOriginalString());
     }
 
     @Test
     public void parse_trimsWhitespace() {
         DateTimeParser.DateTimeInfo info = DateTimeParser.parse(" 2024-02-01 0930 ");
-        assertEquals(LocalDateTime.of(2024, 2, 1, 9, 30), info.dateTime);
-        assertEquals("2024-02-01 0930", info.originalString);
+        assertEquals(LocalDateTime.of(2024, 2, 1, 9, 30), info.getDateTime());
+        assertEquals("2024-02-01 0930", info.getOriginalString());
     }
 
     @Test

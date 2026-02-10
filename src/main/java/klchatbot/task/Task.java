@@ -1,8 +1,8 @@
 package klchatbot.task;
 
 public abstract class Task {
-    protected String description;
-    public boolean isDone;
+    private final String description;
+    private boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -11,6 +11,10 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public void markDone() {
