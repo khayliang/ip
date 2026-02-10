@@ -70,6 +70,7 @@ public class Storage {
      * @param tasks the list of tasks to save
      */
     public static void saveTasks(TaskList tasks) {
+        assert tasks != null : "tasks must not be null";
         try {
             File dir = new File(DATA_DIR);
             if (!dir.exists()) {
@@ -112,6 +113,7 @@ public class Storage {
     }
 
     private static Task parseTaskFromLine(String line) {
+        assert line != null : "line must not be null";
         String[] parts = line.split("\\|", -1);
 
         if (parts.length < 3) {
@@ -158,6 +160,7 @@ public class Storage {
     }
 
     private static String taskToFileLine(Task task) {
+        assert task != null : "task must not be null";
         String type = task.getTypeIcon();
         int isDone = task.isDone ? 1 : 0;
 

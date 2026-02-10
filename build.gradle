@@ -43,7 +43,7 @@ test {
 }
 
 application {
-    mainClass.set("klchatbot.app.CliLauncher")
+    mainClass.set("klchatbot.app.GuiLauncher")
 }
 
 shadowJar {
