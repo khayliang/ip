@@ -45,6 +45,7 @@ public class DateTimeParser {
      * @throws DateTimeParseException if the string cannot be parsed
      */
     public static DateTimeInfo parse(String dateTimeString) throws DateTimeParseException {
+        assert dateTimeString != null : "dateTimeString must not be null";
         String trimmed = dateTimeString.trim();
 
         try {
