@@ -20,10 +20,10 @@ public class DurationParser {
         Matcher matcher = TOKEN.matcher(trimmed);
         int totalMinutes = 0;
         int index = 0;
-        boolean found = false;
+        boolean isFound = false;
 
         while (matcher.find()) {
-            found = true;
+            isFound = true;
             if (matcher.start() != index) {
                 String gap = trimmed.substring(index, matcher.start()).trim();
                 if (!gap.isEmpty()) {
@@ -40,7 +40,7 @@ public class DurationParser {
             index = matcher.end();
         }
 
-        if (!found) {
+        if (!isFound) {
             throw new IllegalArgumentException("Invalid duration format");
         }
         if (index < trimmed.length()) {
