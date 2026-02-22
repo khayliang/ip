@@ -1,14 +1,13 @@
 # KLChatBot User Guide
 
-![KLChatBot UI](Ui.png)
-
 ## Introduction
 KLChatBot is a desktop GUI task manager that helps you track todos, deadlines, events, and fixed-duration tasks in a simple chat-style interface.
 
 ## Quick Start
-1. Run `./gradlew run`.
-1. Type a command in the input box and press Enter or click Send.
-1. Use `list` to view tasks and `bye` to exit.
+1. Download the jar file from the latest release
+1. Run `java -jar ./klchatbot.jar`.
+2. Type a command in the input box and press Enter or click Send.
+3. Use `list` to view tasks and `bye` to exit.
 
 ## Command Summary
 All command keywords are lowercase and case-sensitive.
