@@ -2,10 +2,12 @@ package klchatbot.storage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 
 import klchatbot.task.FixedDuration;
@@ -16,9 +18,9 @@ import klchatbot.task.TaskList;
 import klchatbot.task.Todo;
 
 public class Storage {
-    private static final String DATA_DIR = "./data";
-    private static final String DATA_FILE = "./data/tasks";
-    private static final String TEMP_FILE = DATA_FILE + ".tmp";
+    private static final Path DATA_DIR = Path.of("data");
+    private static final Path DATA_FILE = DATA_DIR.resolve("tasks");
+    private static final Path TEMP_FILE = DATA_DIR.resolve("tasks.tmp");
 
     /**
      * Loads tasks from the data file.
@@ -32,13 +34,12 @@ public class Storage {
         cleanupTempFile();
 
         TaskList tasks = new TaskList();
-        File file = new File(DATA_FILE);
 
-        if (!file.exists()) {
+        if (!Files.exists(DATA_FILE)) {
             return tasks;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = Files.newBufferedReader(DATA_FILE, StandardCharsets.UTF_8)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
@@ -73,29 +74,16 @@ public class Storage {
     public static void saveTasks(TaskList tasks) {
         assert tasks != null : "tasks must not be null";
         try {
-            File dir = new File(DATA_DIR);
-            if (!dir.exists()) {
-                if (!dir.mkdirs()) {
-                    System.err.println("Error: Failed to create data directory: " + DATA_DIR);
-                    return;
-                }
-            }
+            Files.createDirectories(DATA_DIR);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TEMP_FILE))) {
+            try (BufferedWriter writer = Files.newBufferedWriter(TEMP_FILE, StandardCharsets.UTF_8)) {
                 for (Task task : tasks) {
                     writer.write(taskToFileLine(task));
                     writer.newLine();
                 }
             }
 
-            File tempFile = new File(TEMP_FILE);
-            File dataFile = new File(DATA_FILE);
-            if (!tempFile.renameTo(dataFile)) {
-                System.err.println("Error: Failed to save tasks (could not rename temp file)");
-                if (!tempFile.delete()) {
-                    System.err.println("Warning: Could not delete temp file after failed rename: " + TEMP_FILE);
-                }
-            }
+            moveTempToData();
         } catch (IOException e) {
             System.err.println("Error: Failed to save tasks to file: " + e.getMessage());
             cleanupTempFile();
@@ -103,13 +91,25 @@ public class Storage {
     }
 
     private static void cleanupTempFile() {
-        File tempFile = new File(TEMP_FILE);
-        if (tempFile.exists()) {
-            if (tempFile.delete()) {
+        try {
+            if (Files.deleteIfExists(TEMP_FILE)) {
                 System.err.println("Info: Cleaned up leftover temporary file: " + TEMP_FILE);
-            } else {
-                System.err.println("Warning: Could not delete leftover temporary file: " + TEMP_FILE);
             }
+        } catch (IOException e) {
+            System.err.println("Warning: Could not delete leftover temporary file: " + TEMP_FILE);
+        }
+    }
+
+    private static void moveTempToData() throws IOException {
+        try {
+            Files.move(
+                    TEMP_FILE,
+                    DATA_FILE,
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.ATOMIC_MOVE
+            );
+        } catch (AtomicMoveNotSupportedException e) {
+            Files.move(TEMP_FILE, DATA_FILE, StandardCopyOption.REPLACE_EXISTING);
         }
     }
 
